@@ -2,12 +2,26 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { API_URL } from "./config";
 
 function App() {
   const [count, setCount] = useState(0)
+  const [message, setMessage] = useState("Checking backend...");
+
+  useEffect(() => {
+      fetch(`${API_URL}/`)
+        .then(res => res.text())
+        .then(data => setMessage(data))
+        .catch(err => setMessage("❌ Error: " + err.message));
+    }, []);
 
   return (
     <>
+      <div style={{ fontFamily: "Arial, sans-serif", padding: "20px" }}>
+            <h1>AI Interview Assistant</h1>
+            <h2>Frontend ↔ Backend Test</h2>
+            <p>Backend says: {message}</p> {/* ✅ Added here */}
+      </div>
       <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
